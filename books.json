@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Les Miserables",
+    "isbn": 1123456789,
+    "author": 1
+  },
+  {
+    "id": 2,
+    "name": "Les fleurs du mal",
+    "isbn": 2847584758,
+    "author": 2
+  }
+]
