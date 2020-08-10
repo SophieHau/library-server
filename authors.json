@@ -1,11 +1,11 @@
 [
   {
-    "author": 1,
+    "id": "1",
     "firstName": "Victor",
     "lastName": "Hugo"
   },
   {
-    "id": 2,
+    "id": "2",
     "firstName": "Charles",
     "lastName": "Beaudelaire"
   }

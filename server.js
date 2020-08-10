@@ -17,28 +17,67 @@ app.listen(port, (error) => {
   console.log('Server running on port ' + port);
 });
 
-app.get('/books/', (req, res) => {
+app.get('/books', (req, res) => {
   res.send(books);
 });
 
-app.get('/books/:bookId/', (req, res) => {
+app.get('/books/:bookId', (req, res) => {
   const { bookId } = req.params;
   books.forEach((book) => {
-    if (book.id === bookId) {
-      res.json(book);
+    if (bookId === book.id) {
+      authors.forEach((author) => {
+        if (book.author === author.id) {
+          res.send({
+            id: book.id,
+            name: book.name,
+            isbn: book.isbn,
+            author: {
+              firstName: author.firstName,
+              lastName: author.lastName,
+            },
+          });
+        }
+      });
     }
   });
 });
 
-app.get('/authors/', (req, res) => {
+app.get('/authors', (req, res) => {
   res.send(authors);
 });
 
-app.get('/books/:authorId/', (req, res) => {
+app.get('/authors/:authorId', (req, res) => {
   const { authorId } = req.params;
-  books.forEach((author) => {
+  authors.forEach((author) => {
     if (author.id === authorId) {
-      res.json(author);
+      res.send(author);
     }
   });
+});
+
+app.post('/books', (req, res) => {
+  payload = req.body;
+  newBook = {
+    id: payload.id,
+    name: payload.name,
+    isbn: parseInt(payload.isbn),
+    author: payload.author.id,
+  };
+  newAuthor = {
+    id: payload.author.id,
+    firstName: payload.author.firstName,
+    lastName: payload.author.lastName,
+  };
+  authors.push(newAuthor);
+  books.push(newBook);
+});
+
+app.post('/authors', (req, res) => {
+  payload = req.body;
+  newAuthor = {
+    id: payload.id,
+    firstName: payload.firstName,
+    lastName: payload.lastName,
+  };
+  authors.push(newAuthor);
 });
