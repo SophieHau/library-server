@@ -32,6 +32,7 @@ app.get('/books/:bookId', (req, res) => {
             name: book.name,
             isbn: book.isbn,
             author: {
+              id: author.id,
               firstName: author.firstName,
               lastName: author.lastName,
             },
@@ -70,6 +71,7 @@ app.post('/books', (req, res) => {
   };
   authors.push(newAuthor);
   books.push(newBook);
+  res.send('book added');
 });
 
 app.post('/authors', (req, res) => {
@@ -80,4 +82,30 @@ app.post('/authors', (req, res) => {
     lastName: payload.lastName,
   };
   authors.push(newAuthor);
+  res.send('author added');
+});
+
+app.put('/books/:bookId', (req, res) => {
+  payload = req.body;
+  const { bookId } = req.params;
+  books.forEach((book) => {
+    if (book.id === bookId) {
+      book.name = payload.name;
+      book.isbn = payload.isbn;
+      book.author = payload.author.id;
+    }
+  });
+  res.send('book updated');
+});
+
+app.put('/authors/:authorId', (req, res) => {
+  payload = req.body;
+  const { authorId } = req.params;
+  authors.forEach((author) => {
+    if (author.id === authorId) {
+      author.firstName = payload.firstName;
+      author.lastName = payload.lastName;
+    }
+  });
+  res.send('author updated');
 });
